@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/data', [HomeController::class, 'data'])->name('data');
+Route::post('/setting', [HomeController::class, 'setting'])->name('setting');
 Route::get('login', [SocialController::class, 'login'])->name('login');
 Route::post('login', [SocialController::class, 'loginAuth']);
 Route::get('check', [SocialController::class, 'check'])->name('check');

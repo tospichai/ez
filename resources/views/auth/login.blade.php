@@ -48,10 +48,10 @@
                     <i class="fa-brands fa-square-facebook pr-1 mb-1"></i> Login with Facebook
                 </div>
             </a>
-            </div> --}}
+            </div>
                 <div class="mb-2">Not signed up yet? <a href="{{ route('register') }}"><span
                             class="font-bold underline">Sign up</span></a></div>
-                <div class="font-bold underline">Forgot password?</div>
+                <div class="font-bold underline">Forgot password?</div> --}}
             </div>
         </div>
     </form>

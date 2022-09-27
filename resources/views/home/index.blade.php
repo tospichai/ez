@@ -75,7 +75,7 @@
                             </div>
                             <div class="w-full">
                                 <select class="w-full border rounded-lg p-2" id="work">
-                                    @foreach ($issurer as $row)
+                                    @foreach ($work as $row)
                                         <option value="{{ $row->init }}">{{ $row->name }}</option>
                                     @endforeach
                                 </select>
@@ -166,23 +166,60 @@
         <div class="shadow-lg bg-white rounded-lg mt-3">
             <div class="p-8">
                 <div class="w-full mb-3">
-                    <div class="grid grid-cols-6 gap-3 text-center font-bold">
-                        <div>Project</div>
-                        <div>Document Type</div>
-                        <div>Issurer</div>
-                        <div>Work Type/Structure</div>
-                        <div>Consecutive Number</div>
-                        <div>Revision</div>
-                        <div class="text-3xl after:content-['-'] after:ml-10" id="r1"></div>
-                        <div class="text-3xl after:content-['-'] after:ml-10" id="r2"></div>
-                        <div class="text-3xl after:content-['-'] after:ml-10" id="r3"></div>
-                        <div class="text-3xl after:content-['-'] after:ml-10" id="r4"></div>
-                        <div class="text-3xl after:content-['-'] after:ml-10" id="r5"></div>
-                        <div class="text-3xl" id="r6"></div>
+                    <div class="flex gap-3 text-center font-bold justify-between">
+                        <div class="flex flex-col gap-3">
+                            <div>Project</div>
+                            <div class="text-3xl relative">
+                                <div class="after:content-['-'] after:absolute after:-right-[21px]"></div>
+                                <div id="r1"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                Document Type
+                            </div>
+                            <div class="text-3xl relative">
+                                <div class="after:content-['-'] after:absolute after:-right-[21px]"></div>
+                                <div id="r2"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                Issurer
+                            </div>
+                            <div class="text-3xl relative">
+                                <div class="after:content-['-'] after:absolute after:-right-[21px]"></div>
+                                <div id="r3"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                Work Type/Structure
+                            </div>
+                            <div class="text-3xl relative">
+                                <div class="after:content-['-'] after:absolute after:-right-[21px]"></div>
+                                <div id="r4"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                Consecutive Number
+                            </div>
+                            <div class="text-3xl relative">
+                                <div class="after:content-['-'] after:absolute after:-right-[21px]"></div>
+                                <div id="r5"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                Revision
+                            </div>
+                            <div class="text-3xl" id="r6"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-end mt-10">
-                    <div id="result" class="text-white">
+                    <div id="result" class="hidden">
                         <span id="c1"></span>-
                         <span id="c2"></span>-
                         <span id="c3"></span>-
@@ -190,9 +227,9 @@
                         <span id="c5"></span>_
                         <span id="c6"></span>
                     </div>
-                    <div class="relative">
+                    <div class="relative w-full">
                         <button type="button" id="button"
-                            class="p-2 bg-slate-800 text-white rounded-lg cursor-pointer focus:ring focus:bg-green-700">
+                            class="p-2 bg-slate-800 text-white rounded-lg cursor-pointer focus:ring focus:bg-green-700 w-full">
                             Copy to clipboard
                         </button>
                         <div id="copy-success"
@@ -207,42 +244,76 @@
     </form>
 
     <div id="popup" class="transition-all duration-300 opacity-0 invisible">
-        <div class="overflow-y-auto overflow-x-hidden fixed inset-0 w-full flex justify-center items-center">
-            <div class="relative bg-white rounded-none sm:rounded-lg shadow-lg z-50 max-w-3xl overflow-hidden w-full">
-                <div class="w-full p-4 max-h-[90vh] overflow-y-auto">
-                    <div class="text-3xl my-5">Issurer</div>
-                    @foreach ($issurer as $row)
-                        <div class="flex items-center mb-4">
-                            <input id="default-checkbox" type="checkbox" name="issurercheck"
-                                value="{{ $row->id }}"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-2 ">
-                            <label for="default-checkbox"
-                                class="ml-2 text-sm font-medium text-gray-900 ">{{ $row->name }}</label>
-                        </div>
-                    @endforeach
-                </div>
+        <form id="setting" action="{{ route('setting') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="overflow-y-auto overflow-x-hidden fixed inset-0 w-full flex justify-center items-center">
                 <div class="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40 flex justify-center items-center"
                     onclick="hidePopup()">
-                    <img id="imageblur" class="block sm:hidden scale-[3.5] blur-lg"
-                        src="http://localhost:8000/images/product/product3.jpeg" alt="">
                 </div>
-                <div class="absolute top-0 right-0 cursor-pointer">
-                    <div class="w-[32px] h-[32px] rounded-full m-2 p-3 py-1 bg-slate-100"><i
-                            class="fa-solid fa-xmark my-[4px]"></i></div>
+                <div class="relative bg-white rounded-none sm:rounded-lg z-50 shadow-lg max-w-3xl overflow-hidden w-full">
+                    <div class="w-full p-4 max-h-[90vh] overflow-y-auto ">
+                        <div class="text-3xl my-5" id="nametable"></div>
+                        <div id="showdata"></div>
+                    </div>
+
+                    <div class="absolute top-0 right-0 cursor-pointer" onclick="hidePopup()">
+                        <div class="w-[32px] h-[32px] rounded-full m-2 p-3 py-1 bg-slate-100"><i
+                                class="fa-solid fa-xmark my-[4px]"></i></div>
+                    </div>
+                    <input id="table" type="hidden" name="table">
+                    <div class="absolute bottom-0 right-0 cursor-pointer">
+                        <button type="submit" class="rounded-lg m-4 p-5 py-1 bg-slate-800 text-white">
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script>
-        function popup(event) {
-            console.log(event)
+        $(document).mouseup(function(e) {
+            var container = $("#layout-keyboard");
+            var keyboard = $("#keyboard");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                if (!keyboard.is(e.target) && keyboard.has(e.target).length === 0) {
+                    container.fadeOut();
+                }
+            }
+        });
 
-            document.getElementById("popup").classList.remove("opacity-0");
-            document.getElementById("popup").classList.remove("invisible");
-            document.getElementById("popup").classList.add("opacity-100");
+        const url = window.location.origin;
+
+        function popup(event) {
+            $('#showdata').html('');
+            $('#table').val(event);
+            $.ajax({
+                type: 'GET',
+                url: url + '/data?search=' + event,
+                success: function(data) {
+                    data.data.forEach((row) => {
+                        let checked = ''
+                        if (row.is_selected) {
+                            checked = 'checked';
+                        }
+                        $('#nametable').html(data.name);
+                        $('#showdata').append(`<div class="flex items-center mb-4">
+                                    <input ` + checked + ` id="checkbox` + row.id + `" type="checkbox" name="issurercheck[]"
+                                        value="` + row.id + `"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300  dark:ring-offset-gray-800 focus:ring-2 ">
+                                    <label for="checkbox` + row.id + `"
+                                        class="ml-2 text-sm font-medium text-gray-900 ">` + row.name + `</label>
+                                </div>`);
+                    })
+                    document.getElementById("popup").classList.remove("opacity-0");
+                    document.getElementById("popup").classList.remove("invisible");
+                    document.getElementById("popup").classList.add("opacity-100");
+                },
+                error: function() {
+                    console.log(data);
+                }
+            });
         }
 
         function hidePopup(event) {
