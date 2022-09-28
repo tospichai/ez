@@ -233,7 +233,7 @@
                             Copy to clipboard
                         </button>
                         <div id="copy-success"
-                            class="hidden absolute -top-8 right-9 text-xs p-1 px-3 text-white bg-green-500 rounded-full">
+                            class="hidden absolute top-[50%] right-9 text-xs p-1 px-3 text-white bg-green-500 rounded-full translate-x-[-50%] translate-y-[-50%]">
                             Copied</div>
                     </div>
 

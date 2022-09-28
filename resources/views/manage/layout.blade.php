@@ -31,9 +31,13 @@
                             </svg>
                         </button>
                         <ul class="dropdown-menu absolute hidden text-white pt-1 w-full">
+                            <li class=""><a
+                                class="rounded-t bg-slate-800 hover:bg-slate-600 py-2 px-4 whitespace-no-wrap flex justify-between items-center"
+                                href="{{ route('import.index') }}">import <i class="fa-solid fa-file-import"></i></a>
+                        </li>
                             <li class=""><a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="rounded bg-slate-800 hover:bg-slate-600 py-2 px-4 whitespace-no-wrap flex justify-between items-center">
+                                    class="rounded-b bg-slate-800 hover:bg-slate-600 py-2 px-4 whitespace-no-wrap flex justify-between items-center">
                                     Logout <i class="fa-solid fa-right-from-bracket"></i></a>
                             </li>
                         </ul>

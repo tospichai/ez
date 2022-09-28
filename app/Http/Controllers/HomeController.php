@@ -83,7 +83,11 @@ class HomeController extends Controller
 
       if($table){
          $user = User::find(Auth::id());
-         $user[$table] = json_encode(array_map('floatval', $check));
+         if($check){
+            $user[$table] = json_encode(array_map('floatval', $check));
+         }else{
+            $user[$table] = null;
+         }
          $user->save();
       }
 
