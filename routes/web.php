@@ -5,6 +5,7 @@ use App\Http\Controllers\ManageController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\Countervisit;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,16 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/data', [HomeController::class, 'data'])->name('data');
-Route::post('/setting', [HomeController::class, 'setting'])->name('setting');
-Route::get('login', [SocialController::class, 'login'])->name('login');
-Route::post('login', [SocialController::class, 'loginAuth']);
-Route::get('check', [SocialController::class, 'check'])->name('check');
-Route::get('register', [SocialController::class, 'register'])->name('register');
-Route::post('register', [SocialController::class, 'registerAuth']);
-Route::post('logout', [SocialController::class, 'logout'])->name('logout');
-
+Route::middleware([Countervisit::class])->group(
+    function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::get('/data', [HomeController::class, 'data'])->name('data');
+        Route::post('/setting', [HomeController::class, 'setting'])->name('setting');
+        Route::get('login', [SocialController::class, 'login'])->name('login');
+        Route::post('login', [SocialController::class, 'loginAuth']);
+        Route::get('check', [SocialController::class, 'check'])->name('check');
+        Route::get('register', [SocialController::class, 'register'])->name('register');
+        Route::post('register', [SocialController::class, 'registerAuth']);
+        Route::post('logout', [SocialController::class, 'logout'])->name('logout');
+    }
+);
 Route::prefix('import')->name('import.')->group(function () {
     Route::get('/', [ImportController::class, 'index'])->name('index');
     Route::get('/type', [ImportController::class, 'type'])->name('type');

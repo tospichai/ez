@@ -17,11 +17,11 @@
 </head>
 
 <body class="bg-slate-200">
-    <div class="max-w-4xl mx-auto md:my-5">
-        <div class="md:pb-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="">
             <div class="flex justify-between items-center">
                 @yield('navbar')
-                <div class="p-3 px-4">
+                {{-- <div class="p-3 px-4">
                     <div class="dropdown inline-block relative">
                         <button
                             class="bg-slate-800 text-white font-semibold py-2 px-8 rounded inline-flex items-center">
@@ -42,7 +42,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
